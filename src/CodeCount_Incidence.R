@@ -13,6 +13,9 @@ sex_age_agg<-aggregate(cbind(N_EVENTS, PERSON_YEARS)~EVENT+SEX+AGE, incidence, s
 library (data.table)
 
 graph<-rbindlist(list(incidence, year_agg, sex_agg, age_agg, year_sex_agg, year_age_agg, sex_age_agg), fill = TRUE)
+
+graph[is.na(graph)] = 0
+
 pneumonia$Age[is.na(pneumonia$Age)] <- pneumonia$AgeGroup.text[is.na(pneumonia$Age)] #set NAs in Age variable equal to AgeGroup.text
 
 pneumo_agg <- aggregate(cbind(PersonYears, Events) ~ Age, pneumonia, sum) #Aggregate over Age
